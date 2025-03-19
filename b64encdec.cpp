@@ -3,8 +3,8 @@
 // - Checks and informs user if file extension is valid
 // (valid file extensions are .txt, .csv, .docx, and .rtf)
 // How to use:
-// (1) Download this folder
-// (2) Drop the file's content you want to encrypt or decrypt
+// (1) Download this program with the header.
+// (2) Drop the file's content you want to encrypt or decrypt.
 
 #include "b64head.h"
 #include <cstring>
