@@ -27,7 +27,7 @@ const vector<int> ascii_mapping {
     -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 
     41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1 
 };
-//includes all 128 characters, however invalid/exclusive ones are marked as -1
+//includes all 128 characters, however invalid ones are marked as -1
 
 
 string b64_encstr(const string& plain_text) {
