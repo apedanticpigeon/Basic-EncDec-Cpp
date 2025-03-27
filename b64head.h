@@ -6,7 +6,7 @@
 using namespace std;
 typedef unsigned char b;
 
-string b64_encrypt(b const* buff, unsigned int buffLen);
-vector<b> b64_decrypt(string const&);
+string b64_encode(b const* buff, unsigned int buffLen);
+vector<b> b64_decode(string const&);
 
 #endif
