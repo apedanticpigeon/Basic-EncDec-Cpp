@@ -1,4 +1,4 @@
-# BASIC ENCDEC (Encryption-Decryption) METHODS PROGRAMMED USING C++
+# BASIC ENCDEC (Encoding-Decoding) METHODS PROGRAMMED USING C++
 ## EncDec Methods (W.I.P)
 <li> B64 (completed) </li>
 <li> Vigenère Cipher (in progress) </li>
