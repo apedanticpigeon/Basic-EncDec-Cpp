@@ -1,10 +1,11 @@
 //Code functions:
-// - Encrypt and decrypt messages + files
+// - Encode and decode messages + files
 // - Checks and informs user if file extension is valid
 // (valid file extensions are .txt, .csv, .docx, and .rtf)
 // How to use:
-// (1) Download this program with the header.
-// (2) Drop the file's content you want to encrypt or decrypt.
+// (1) Download this folder
+// (2) Drop the file's content you want to encode or decode
+// Examples/Test files are provided in this file
 
 #include "b64head.h"
 #include <cstring>
@@ -31,51 +32,51 @@ const vector<int> ascii_mapping {
 
 
 string b64_encstr(const string& plain_text) {
-    string encrypted_text;
+    string encoded_text;
     int val = 0, b_val = -6;
     for (unsigned char ch : plain_text) {
         val = (val << 8) + ch;
         b_val += 8;
         while (b_val >= 0) {
-            encrypted_text.push_back(b64_tb[(val >> b_val) & 63]);
+            encoded_text.push_back(b64_tb[(val >> b_val) & 63]);
             b_val -= 6;
         }
     }
     if (b_val > -6) {
-        encrypted_text.push_back(b64_tb[(val << 8) >> (b_val + 8) & 63]);
+        encoded_text.push_back(b64_tb[(val << 8) >> (b_val + 8) & 63]);
     }
-    while (encrypted_text.size() % 4 != 0) {
-        encrypted_text.push_back('=');
+    while (encoded_text.size() % 4 != 0) {
+        encoded_text.push_back('=');
     }
-    return encrypted_text;
+    return encoded_text;
 }
 
 string b64_encf(vector<unsigned char>& original_cont) {
-    string encrypted_cont;
+    string encoded_cont;
     int val = 0, b_val = -6;
     for (unsigned char ch : original_cont) {
         val = (val << 8) + ch;
         b_val += 8;
         while (b_val >= 0) {
-            encrypted_cont.push_back(b64_tb[(val >> b_val) & 63]); //val * [2^(b_val)] & 63
+            encoded_cont.push_back(b64_tb[(val >> b_val) & 63]); //val * [2^(b_val)] & 63
             b_val -= 6; //b_val = -4
         }
     }
     if (b_val > -6) {
-        encrypted_cont.push_back(b64_tb[(val << 8) >> (b_val + 8) & 63]); //[val * 64] / 2^[b_val + 8] & 63
+        encoded_cont.push_back(b64_tb[(val << 8) >> (b_val + 8) & 63]); //[val * 64] / 2^[b_val + 8] & 63
     }
-    while (encrypted_cont.size() % 4 != 0) {
-        encrypted_cont.push_back('=');
+    while (encoded_cont.size() % 4 != 0) {
+        encoded_cont.push_back('=');
     }
-    return encrypted_cont;
+    return encoded_cont;
 }
 
-string b64_decstr(const string& encrypted_text) {
-    string decrypted_string;
+string b64_decstr(const string& encoded_text) {
+    string decoded_string;
     vector<int> table(256, -1);
     for (int i = 0; i < 64; i++) table[b64_tb[i]] = i; 
     int val = 0, b_val = 8;
-    for (char c : encrypted_text) {
+    for (char c : encoded_text) {
         if (table[c] == -1) break;
         int i = (c < 128) ? ascii_mapping[c] : -1;
         if (i == -1) {
@@ -84,28 +85,28 @@ string b64_decstr(const string& encrypted_text) {
         val = (val << 6) + table[c];
         b_val += 6; 
         if (b_val >= 0) {
-            decrypted_string.push_back(char((val>>b_val)&255)); //0xFF = 255
+            decoded_string.push_back(char((val>>b_val)&255)); //0xFF = 255
             b_val -= 8;
         }
     }
-    return decrypted_string;
+    return decoded_string;
 }
 
-string b64_decf(vector <unsigned char>& encrypted_cont) {
-    string decrypted_cont;
+string b64_decf(vector <unsigned char>& encoded_cont) {
+    string decoded_cont;
     vector<int> table(256, -1);
     for (int i = 0; i < 64; i++) table[b64_tb[i]] = i;
     int val = 0, b_val = 8;
-    for (char c : encrypted_cont) {
+    for (char c : encoded_cont) {
         if (table[c] == -1) break;
         val = (val << 6) + table[c];
         b_val += 6; 
         if (b_val >= 0) {
-            decrypted_cont.push_back(char((val>>b_val)&255)); //0xFF = 255
+            decoded_cont.push_back(char((val>>b_val)&255)); //0xFF = 255
             b_val -= 8;
         }
     }
-    return decrypted_cont;
+    return decoded_cont
 }
 
 vector<unsigned char> readf(const string& fn) {
@@ -114,14 +115,14 @@ vector<unsigned char> readf(const string& fn) {
     return temp_store;
 }
 
-void encf(const string& fn, const string& decrypted_cont) {
+void encf(const string& fn, const string& decoded_cont) {
     ofstream file(fn);
-    file << decrypted_cont;
+    file << decoded_cont;
 }
 
-void decf(const string& fn, const string& encrypted_cont) {
+void decf(const string& fn, const string& encoded_cont) {
     ofstream file(fn);
-    file << encrypted_cont;
+    file << encoded_cont;
 }
 
 bool fileExtCheck (const string& fn, const vector<string>& file_ext) {
@@ -135,13 +136,13 @@ bool fileExtCheck (const string& fn, const vector<string>& file_ext) {
 
 int main() {
     string inp_opt;
-    cout << "1) Encrypt a file's content/message" << endl;
-    cout << "2) Decrypt a file's content/message" << endl;
+    cout << "1) Encode a file's content or message" << endl;
+    cout << "2) Decode a file's content or message" << endl;
     cin >> inp_opt;
     if (inp_opt == "1") {
         string enc_opt;
-        cout << "1) Encrypt a file's content" << endl;
-        cout << "2) Encrypt a message" << endl;
+        cout << "1) Encode a file's content" << endl;
+        cout << "2) Encode a message" << endl;
         cin >> enc_opt;
         if (enc_opt == "1") {
             ifstream original_file;
@@ -175,23 +176,23 @@ int main() {
     }
     if (inp_opt == "2") {
         string enc_opt;
-        cout << "1) Decrypt a file's content" << endl;
-        cout << "2) Decrypt a message" << endl;
+        cout << "1) Decode a file's content" << endl;
+        cout << "2) Decode a message" << endl;
         cin >> enc_opt;
         if (enc_opt == "1") {
-            ifstream encrypted_file;
+            ifstream encoded_file;
             string file, fn;
             vector<string>file_ext = {".txt", ".csv", ".docx", ".rtf"};
             cout << "Enter file name with appropriate file extensions: ";
             cin >> fn;
-            encrypted_file.open(fn);
+            encoded_file.open(fn);
             if (fileExtCheck (fn, file_ext)) {
-                if (encrypted_file) {
+                if (encoded_file) {
                     vector<unsigned char> original_cont = readf(fn);
-                    string decrypted_cont = b64_decf(original_cont);
-                    string output_file = "decrypted.txt";
-                    decf(output_file, decrypted_cont);
-                    cout << "Finished decrypting original file contents." << endl;
+                    string decoded_cont = b64_decf(original_cont);
+                    string output_file = "decoded.txt";
+                    decf(output_file, decoded_cont);
+                    cout << "Finished decoding original file contents." << endl;
                 } else {
                     cout << "ERROR: File does not exist.";
                     exit(-1);
@@ -201,11 +202,11 @@ int main() {
                 exit(-1);
             }
         } else if (enc_opt == "2") {
-            string encrypted_text;
-            cout << "Enter encrypted text: ";
-            cin >> encrypted_text;
-            string decrypted_text = b64_decstr(encrypted_text);
-            cout << decrypted_text << endl;
+            string encoded_text;
+            cout << "Enter encoded text: ";
+            cin >> encoded_text;
+            string decoded_text = b64_decstr(encoded_text);
+            cout << decoded_text << endl;
         }
     }
     return 0;
