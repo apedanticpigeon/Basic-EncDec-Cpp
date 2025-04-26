@@ -106,7 +106,7 @@ string b64_decf(vector <unsigned char>& encoded_cont) {
             b_val -= 8;
         }
     }
-    return decoded_cont
+    return decoded_cont;
 }
 
 vector<unsigned char> readf(const string& fn) {
