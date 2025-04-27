@@ -135,8 +135,9 @@ bool fileExtCheck (const string& fn, const vector<string>& file_ext) {
 }
 
 int main() {
-    string inp_opt;
-    cout << "1) Encode a file's content or message" << endl;
+    string inp_opt, decision;
+    do {
+        cout << "1) Encode a file's content or message" << endl;
     cout << "2) Decode a file's content or message" << endl;
     cin >> inp_opt;
     if (inp_opt == "1") {
@@ -175,11 +176,11 @@ int main() {
         }
     }
     if (inp_opt == "2") {
-        string enc_opt;
+        string dec_opt;
         cout << "1) Decode a file's content" << endl;
         cout << "2) Decode a message" << endl;
-        cin >> enc_opt;
-        if (enc_opt == "1") {
+        cin >> dec_opt;
+        if (dec_opt == "1") {
             ifstream encoded_file;
             string file, fn;
             vector<string>file_ext = {".txt", ".csv", ".docx", ".rtf"};
@@ -201,13 +202,16 @@ int main() {
                 cout << "ERROR: Invalid file extension.";
                 exit(-1);
             }
-        } else if (enc_opt == "2") {
-            string encoded_text;
-            cout << "Enter encoded text: ";
-            cin >> encoded_text;
-            string decoded_text = b64_decstr(encoded_text);
-            cout << decoded_text << endl;
-        }
-    }
+            } else if (dec_opt == "2") {
+                string encoded_text;
+                cout << "Enter encoded text: ";
+                cin >> encoded_text;
+                string decoded_text = b64_decstr(encoded_text);
+                cout << decoded_text << endl;
+            }
+            cout << "Do you still want to continue? (Y/N)\n";
+            cin >> decision;
+        } 
+    } while (decision == "Y" || decision == "y");
     return 0;
 }
