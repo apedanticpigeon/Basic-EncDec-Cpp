@@ -4,9 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <bitset>
-#define MAX_LEN 1024
 using namespace std;
-
 
 int inverse (int n) {
     for (int i = 0; i < 26; i++) {
