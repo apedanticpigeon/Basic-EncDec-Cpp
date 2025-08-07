@@ -7,8 +7,6 @@
 <hr>
 
 ## List of Ciphers (to be programmed in order)
-<li>Atbash Cipher</li>
-<li>ROTx Cipher</li>
 <li>Playfair Cipher</li>
 <li>Hill Cipher</li>
 <li>Vigenère Cipher (without key)</li>
