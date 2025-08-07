@@ -7,7 +7,6 @@
 <hr>
 
 ## List of Ciphers (to be programmed in order)
-<li>Caesar Cipher</li>
 <li>Atbash Cipher</li>
 <li>ROTx Cipher</li>
 <li>Playfair Cipher</li>
