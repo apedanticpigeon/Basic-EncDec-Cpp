@@ -12,6 +12,5 @@
 <li>Vigenère Cipher (without key)</li>
 <li>Bazeries Cypher</li>
 <li>Quantum Logic Gates*</li>
-<b>Completed Programs: </b> base64 and Vigenère with key
 <br>
 *It is not an 'encoding algorithm' but I like to try programming it in C++. It has been done by IBM, but it is in Python.
