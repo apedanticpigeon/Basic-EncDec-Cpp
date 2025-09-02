@@ -6,8 +6,6 @@
 // (1) Download this folder
 // (2) Drop the file's content you want to encode or decode
 // Examples/Test files are provided in this file
-
-#include "b64head.h"
 #include <cstring>
 #include <algorithm>
 #include <fstream>
@@ -215,3 +213,4 @@ int main() {
     } while (decision == "Y" || decision == "y");
     return 0;
 }
+
